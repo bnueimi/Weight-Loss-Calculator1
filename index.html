@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Weight Loss Calculator</title>
+    <style>
+        .alertbox {
+            width: 400px;
+            height: 200px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .alertbox p {
+            font-size: 13px;
+            margin-top: -7px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+
+        #errorButton,
+        #successButton {
+            width: 60px;
+            height: 30px;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- <h1>The Weight Loss Calculator</h1> -->
+        <h1>The Weight Loss Calculator</h1>
+        <img class="image" src="https://zahma.cairolive.com/wp-content/uploads/2017/03/d35ee3a5e3c5ce17551.jpg" width="250px">
+        <form id="weightLossForm">
+            <label class="l1" for="runningHours">Enter number of hours of running:</label>
+            <input class="l1" type="text" id="runningHours" min="0" max="10"><br>
+            <label class="l2" for="cyclingHours">Enter number of hours of cycling:</label>
+            <input class="l2" type="text" id="cyclingHours" min="0" max="10"><br>
+            <label class="l3" for="walkingHours">Enter number of hours of walking:</label>
+            <input class="l3" type="text" id="walkingHours" min="0" max="10"><br>
+            <button class="btn" type="submit">Submit</button>
+            <input class="btn" type="reset" value="Reset">
+        </form>
+    </div>
+    <div id="resultContainer"></div>
+
+    <script>
+        document.getElementById("weightLossForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // منع إرسال النموذج
+
+            var runningHours = parseFloat(document.getElementById("runningHours").value);
+            var cyclingHours = parseFloat(document.getElementById("cyclingHours").value);
+            var walkingHours = parseFloat(document.getElementById("walkingHours").value);
+
+            if (isNaN(runningHours) || isNaN(cyclingHours) || isNaN(walkingHours) || runningHours > 10 || cyclingHours > 10 || walkingHours > 10) {
+                var errorMessage = "<div class='alertbox error'>" +
+                    "<h4>localhost says:</h4>" +
+                    "<p>Your entered values are incomplete or invalid. Please try again.</p>" +
+                    "<label><input type='checkbox' id='preventDialogsCheckbox'> Prevent this page from creating additional dialogs.</label>" +
+                    "<button id='errorButton' onclick='closeAlertBox()'>OK</button>" +
+                    "</div>";
+
+                document.getElementById("resultContainer").innerHTML = errorMessage;
+                return;
+            }
+
+            var runningCalories = 185;
+            var cyclingCalories = 225;
+            var walkingCalories = 164;
+            var caloriesBurned = (runningHours * runningCalories) + (cyclingHours * cyclingCalories) + (walkingHours * walkingCalories);
+
+            var weightLossGrams = Math.floor(caloriesBurned / 3.8); // تحويل السعرات الحرارية إلى غرام
+            var weightKilograms = (weightLossGrams / 1000).toFixed(3); // تحويل الغرامات إلى كيلوجرام بتنسيق "0.000"
+
+            var successMessage = "<div class='alertbox success'>" +
+                "<h4>Thank you for using the weight loss website</h4>" +
+                "<p>Number of calories burned is: " + caloriesBurned + " calories</p>" +
+                "<p>Number of kilograms worked off is: " + weightKilograms + " kilograms</p>" +
+                "<label><input type='checkbox' id='preventDialogsCheckbox'> Prevent this page from creating additional dialogs.</label>" +
+                "<button id='successButton' onclick='closeAlertBox()'>OK</button>" +
+                "</div>";
+
+            document.getElementById("resultContainer").innerHTML = successMessage;
+        });
+
+        function closeAlertBox() {
+            var preventDialogs = document.getElementById("preventDialogs").checked;
+            if (preventDialogs) {
+                window.alert = function () { };
+            }
+
+            document.getElementById("resultContainer").innerHTML = "";
+        }
+
+        function closeAlertBox() {
+            var preventDialogs = document.getElementById("preventDialogsCheckbox").checked;
+            if (preventDialogs) {
+                window.alert = function () { };
+            }
+
+            document.getElementById("resultContainer").innerHTML = "";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+ body{
+    background-color: aqua;
+} 
+
+h1{
+    margin-left: 600px;
+}
+
+.image{
+    height: 500px;
+    width: 1470px;
+}
+
+/* .l1{
+    display: inline;
+}
+.l2{
+    display: inline;
+}
+.l3{
+    display: inline;
+} */
+
+.btn{
+    background-color: rgba(38, 38, 92, 0.781);
+    height: 20px;
+    width: 100px;
+}
+.btn:hover{
+    background-color: rgba(32, 32, 108, 0.32);
+}
